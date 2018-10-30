@@ -1,0 +1,131 @@
+//Het level waar je begint
+
+let level = 1
+let lampnummer = 0
+
+//Functies, opdrachten die gegeven worden.
+function vraagKoe() {
+    if (pins.A1.analogRead() > 1000) {
+
+        level = level + 1
+        lampnummer = lampnummer + 1
+
+        light.setPixelColor(lampnummer, 0x00ff00)
+        pause(3000)
+
+    }
+    else if (pins.A2.analogRead() > 1000 || pins.A3.analogRead() > 1000 || pins.A4.analogRead() > 1000) {
+        light.setAll(0xff0000)
+        level = 1
+        lampnummer = 0
+        pause(3000)
+
+    }
+}
+
+
+function vraagKip() {
+    if (pins.A2.analogRead() > 1000) {
+
+        level = level + 1
+        lampnummer = lampnummer + 1
+
+        light.setPixelColor(lampnummer, 0x00ff00)
+        pause(3000)
+
+    }
+    else if (pins.A1.analogRead() > 1000 || pins.A3.analogRead() > 1000 || pins.A4.analogRead() > 1000) {
+        light.setAll(0xff0000)
+        level = 1
+        lampnummer = 0
+        pause(3000)
+    }
+}
+
+function vraagVarken() {
+    if (pins.A3.analogRead() > 1000) {
+
+        level = level + 1
+        lampnummer = lampnummer + 1
+
+        light.setPixelColor(lampnummer, 0x00ff00)
+        pause(3000)
+
+    }
+    else if (pins.A1.analogRead() > 1000 || pins.A2.analogRead() > 1000 || pins.A4.analogRead() > 1000) {
+        light.setAll(0xff0000)
+        level = 1
+        lampnummer = 0
+        pause(3000)
+    }
+}
+
+function vraagSchaap() {
+    if (pins.A4.analogRead() > 1000) {
+
+        level = level + 1
+        lampnummer = lampnummer + 1
+
+        light.setPixelColor(lampnummer, 0x00ff00)
+        pause(3000)
+
+    }
+    else if (pins.A1.analogRead() > 1000 || pins.A2.analogRead() > 1000 || pins.A3.analogRead() > 1000) {
+        light.setAll(0xff0000)
+        level = 1
+        lampnummer = 0
+        pause(3000)
+    }
+}
+//Check welk level je bent en welk dier er gevraagd moet worden.
+
+loops.forever(function () {
+
+    if (level == 1) {
+        light.setAll(0x000000)
+        light.setPixelColor(lampnummer, 0x00ff00)
+        vraagKoe()
+    }
+    else if (level == 2) {
+
+        vraagKip()
+    }
+    else if (level == 3) {
+
+        vraagVarken()
+    }
+    else if (level == 4) {
+
+        vraagSchaap()
+    }
+    else if (level == 5) {
+
+        vraagKip()
+    }
+    else if (level == 6) {
+
+        vraagKoe()
+    }
+    else if (level == 7) {
+
+        vraagSchaap()
+    }
+    else if (level == 8) {
+
+        vraagVarken()
+    }
+    else if (level == 9) {
+
+        vraagKip()
+    }
+    else {
+        music.playSound(music.sounds(Sounds.Siren))
+        light.showAnimation(light.rainbowAnimation, 3000)
+        pause(3000)
+        music.stopAllSounds()
+        level = 1
+        lampnummer = 0
+    }
+    console.log("" + pins.A1.analogRead())
+    console.log(`${level}`)
+})
